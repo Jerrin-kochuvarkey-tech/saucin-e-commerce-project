@@ -1,6 +1,16 @@
 pipeline {
     agent any
     stages {
+        stage('Install Node.js') {
+            steps {
+                // Install Node.js version 16
+                sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash'
+                sh 'export NVM_DIR="$HOME/.nvm"'
+                sh '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || return 1'
+                sh 'nvm install 16'
+                sh 'nvm use 16'
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'

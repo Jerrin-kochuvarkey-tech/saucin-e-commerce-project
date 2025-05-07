@@ -1,51 +1,37 @@
 pipeline {
     agent any
-
-    environment {
-        NODE_HOME = '/usr/local/bin'
-        PATH = "${NODE_HOME}:${env.PATH}"
-    }
-
     stages {
-        stage('Clone Frontend') {
-            steps {
-                dir('frontend') {
-                    git branch: 'frontend', url: 'https://github.com/Jerrin-kochuvarkey-tech/saucin-e-commerce-project.git'
-                }
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
-                dir('frontend') {
-                    sh 'npm install'
-                }
+                sh 'npm install'
             }
         }
-
-        stage('Build Project') {
+        stage('Build React App') {
             steps {
-                dir('frontend') {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
-
-        stage('Verify Build Output') {
+        stage('Docker Build & Push') {
             steps {
-                dir('frontend') {
-                    sh 'ls -lh dist' // replace with 'build' if using Create React App
+                sh 'docker build -t jerrin1012/saucin-frontend:latest .'
+                withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
+                    sh 'docker push jerrin1012/saucin-frontend:latest'
                 }
             }
         }
-    }
-
-    post {
-        success {
-            echo '✅ Frontend build completed successfully.'
-        }
-        failure {
-            echo '❌ Frontend build failed.'
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(credentials: ['ec2-ssh']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ec2-user@3.109.184.113 '
+                        docker pull jerrin1012/saucin-frontend:latest &&
+                        docker stop saucin-frontend || true &&
+                        docker rm saucin-frontend || true &&
+                        docker run -d -p 80:80 --name saucin-frontend jerrin1012/saucin-frontend:latest
+                    '
+                    '''
+                }
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-# Stage 1: Build the React app using Vite
-FROM node:18-alpine AS build
+# frontend/Dockerfile
+FROM node:20-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm install
 RUN npm run build
+
 
 # Stage 2: Serve with nginx
 FROM nginx:alpine

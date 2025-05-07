@@ -1,19 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Install Node.js') {
+        stage('Clean & Install Dependencies') {
             steps {
-                // Install Node.js version 16
-                sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash'
-                sh 'export NVM_DIR="$HOME/.nvm"'
-                sh '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || return 1'
-                sh 'nvm install 16'
-                sh 'nvm use 16'
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
+                sh '''
+                    rm -rf node_modules dist
+                    npm install
+                '''
             }
         }
         stage('Build React App') {
@@ -33,7 +26,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['ec2-ssh']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ec2-user@3.109.184.113 '
+                    ssh -o StrictHostKeyChecking=no ec2-user@<EC2-IP> '
                         docker pull jerrin1012/saucin-frontend:latest &&
                         docker stop saucin-frontend || true &&
                         docker rm saucin-frontend || true &&
@@ -45,4 +38,5 @@ pipeline {
         }
     }
 }
+
 

@@ -30,6 +30,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
-            role=validated_data.get('role', 'customer')  # default to 'customer' if role is not provided
+            # role=validated_data.get('role', 'customer')  # default to 'customer' if role is not provided
         )
         return user

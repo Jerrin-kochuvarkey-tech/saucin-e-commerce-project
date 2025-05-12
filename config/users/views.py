@@ -4,6 +4,9 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from .serializers import RegisterSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import get_user_model
+
+User = get_user_model()  # Use this to reference the custom User model
 
 @api_view(['POST'])
 def register_user(request):
@@ -17,7 +20,14 @@ def register_user(request):
 def login_user(request):
     email = request.data.get('email')
     password = request.data.get('password')
-    user = authenticate(request, username=email, password=password)
+
+    try:
+        user_obj = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    user = authenticate(request, username=user_obj.username, password=password)
+
     if user is not None:
         refresh = RefreshToken.for_user(user)
         return Response({

@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.12' // Use a Python image that includes the necessary dependencies
-            label 'docker' // You can specify the label if needed
-        }
-    }
+    agent any  // This will use the default agent
     environment {
         VIRTUAL_ENV = 'venv'
     }

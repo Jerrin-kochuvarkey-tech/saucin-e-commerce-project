@@ -6,7 +6,7 @@ class User(AbstractUser):
         ('manager', 'Manager'),
         ('user', 'User'),
     ]
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=15, null=False, default='N/A')
     address = models.TextField(default="No Address Provided") 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
     pincode = models.CharField(max_length=10)

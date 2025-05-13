@@ -1,4 +1,5 @@
 # Step 1: Build the React app with Vite
+
 FROM node:18-bullseye AS build
 
 # Set the working directory inside the container

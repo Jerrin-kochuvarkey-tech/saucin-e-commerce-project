@@ -27,4 +27,4 @@ EXPOSE 80
 
 # Run Nginx to serve the app
 CMD ["nginx", "-g", "daemon off;"]
-"Dockerfile" 31L, 669B       
+     

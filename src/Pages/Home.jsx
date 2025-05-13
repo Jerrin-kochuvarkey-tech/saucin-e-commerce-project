@@ -1,13 +1,17 @@
 import React from 'react'
 import { Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 
 
 function Home() {
 
         return (
+
             <div>
+              <Header></Header>
+              
                 <Row>
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -42,7 +46,7 @@ function Home() {
                     
                         
 
-                        <div style={{ backgroundColor: '#e6f0e8' }} className='mt-5 p-3'>
+                  <div style={{ backgroundColor: '#e6f0e8' }} className='mt-5 p-3'>
                 <h1 className='text-center'>TOP MENUS</h1>
                 <div className='w-75 container'>
                     <marquee scrollOver={25}>
@@ -52,8 +56,10 @@ function Home() {
 
                         </div>
                     </marquee>
-                    <p className='text-center text-danger mt-4'>View more Products <i class="fa-solid fa-arrow-right"></i> </p>
-
+<Link to={'/allproducts'} style={{textDecoration:'none'}}>
+                      <p className='text-center text-danger mt-4'>View more Products <i class="fa-solid fa-arrow-right"></i> </p>
+  
+</Link>
                 </div>
                 {/* <Link style={{ textDecoration: 'none' }} to={'/Allprojects'}> */}
                     

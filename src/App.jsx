@@ -10,7 +10,10 @@ import Registration from './Pages/Registration';
 import Footer from './components/Footer';
 import Cart from './Pages/Cart';
 import Wishlist from './Pages/Wishlist';
-
+import Addcategory from './components/Addcategory';
+import Allproducts from './Pages/Allproducts';
+import Addproduct from './components/Addproduct';
+import Homestaff from './Pages/Homestaff';
 
 
 
@@ -20,13 +23,17 @@ function App() {
 
   return (
     <>
-    <Header></Header>
+    {/* <Header></Header> */}
     <Routes>
     <Route path="/" element={<Home></Home>}></Route>
     <Route path="/login" element={<Login></Login>}></Route>
     <Route path="/signup" element={<Registration></Registration>}></Route>
     <Route path="/cart" element={<Cart></Cart>}></Route>
     <Route path="/wishlist" element={<Wishlist></Wishlist>}></Route>
+    <Route path="/staff/addcategory" element={<Addcategory></Addcategory>}></Route>
+    <Route path="/staff/addproduct" element={<Addproduct></Addproduct>}></Route>
+    <Route path='/allproducts' element={<Allproducts></Allproducts>}></Route>
+    <Route path='/staff/home' element={<Homestaff></Homestaff>}></Route>
     </Routes>
     <Footer></Footer>
     </>

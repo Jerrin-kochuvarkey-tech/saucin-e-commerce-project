@@ -1,5 +1,6 @@
 # Step 1: Build the React app with Vite
-FROM node:16 AS build
+
+FROM node:18-bullseye AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -27,5 +28,3 @@ EXPOSE 80
 
 # Run Nginx to serve the app
 CMD ["nginx", "-g", "daemon off;"]
-
-

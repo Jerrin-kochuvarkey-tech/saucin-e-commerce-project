@@ -4,8 +4,8 @@ FROM python:3.12-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the config directory contents into the container at /app
-COPY config/ /app/
+# Copy the current directory contents into the container at /app
+COPY . /app/
 
 # Install dependencies from requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
@@ -17,4 +17,4 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1
 
 # Run the Django development server when the container starts
-CMD ["python", "/app/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

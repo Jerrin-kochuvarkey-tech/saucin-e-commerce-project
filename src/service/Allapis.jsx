@@ -1,5 +1,5 @@
 import { commonApi  } from "./Commonstructure"
-import { BASE_URL } from "./BaseUrl";
+import { BASE_URL } from "./Baseurl";
 
 export const registerApi=async(body)=>{
 return  await  commonApi('POST',`${BASE_URL}/user/register`,body,"")

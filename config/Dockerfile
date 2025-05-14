@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the config folder (which contains manage.py, Django apps, etc.)
 COPY config/ /app/
 
+# Copy the .env file to the container (make sure it's in the same directory as your Dockerfile)
+COPY .env .env
+
 # Expose Django's default port
 EXPOSE 8000
 

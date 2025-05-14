@@ -1,14 +1,15 @@
 from rest_framework import serializers
 from .models import Category, Product
 
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'image', 'description']
+        fields = '__all__'
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)  # nested representation
+    category = CategorySerializer(read_only=True)  # nested category info
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source='category', write_only=True
     )
@@ -27,3 +28,22 @@ class ProductSerializer(serializers.ModelSerializer):
             'is_available',
             'created_at'
         ]
+
+
+class ProductUserSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'price', 'category', 'image']
+
+
+class ProductAdminManagerSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), source='category', write_only=True
+    )
+
+    class Meta:
+        model = Product
+        fields = '__all__'
